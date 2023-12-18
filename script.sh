@@ -29,6 +29,10 @@ select yn in "Yes" "No"; do
 done
 
 #SSH
+echo "Enter ssh custom port"
+read port
+
+$a sed -re 's/^(\#)(Port)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(\#)(PermitRootLogin)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(\#)(PasswordAuthentication)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(\#)(MaxAuthTries)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh/sshd_config
@@ -38,14 +42,15 @@ $a sed -re 's/^(\#)(PermitEmptyPasswords)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh
 $a sed -re 's/^(PasswordAuthentication)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)prohibit-password/\1\2no/' -i /etc/ssh/sshd_config
+$a sed -re 's/^(PermitRootLogin)([[:space:]]+)22/\1\2'"$port"'/' -i /etc/ssh/sshd_config
 
 #IPTABLES
 $a apt update
-$a apt install iptables-persistent htop -y
+$a apt install iptables-persistent htop fail2ban -y
 $a iptables --policy INPUT DROP
 $a iptables -A INPUT -i lo -j ACCEPT
 $a iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-$a iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+$a iptables -A INPUT -p tcp --dport $port -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 $a netfilter-persistent save
 
 #SWAP
@@ -66,5 +71,7 @@ $a chmod a+r /etc/apt/keyrings/docker.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | $a tee /etc/apt/sources.list.d/docker.list > /dev/null
 $a apt-get update
 $a apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+#FAIL2BAN
 
 $a reboot

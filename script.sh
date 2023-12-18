@@ -42,11 +42,11 @@ $a sed -re 's/^(\#)(PermitEmptyPasswords)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh
 $a sed -re 's/^(PasswordAuthentication)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)prohibit-password/\1\2no/' -i /etc/ssh/sshd_config
-$a sed -re 's/^(PermitRootLogin)([[:space:]]+)22/\1\2'"$port"'/' -i /etc/ssh/sshd_config
+$a sed -re "s/^(PermitRootLogin)([[:space:]]+)22/\1\2$port/" -i /etc/ssh/sshd_config
 
 #IPTABLES
 $a apt update
-$a apt install iptables-persistent htop fail2ban -y
+$a apt install iptables-persistent htop -y
 $a iptables --policy INPUT DROP
 $a iptables -A INPUT -i lo -j ACCEPT
 $a iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT

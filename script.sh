@@ -42,7 +42,7 @@ $a sed -re 's/^(\#)(PermitEmptyPasswords)([[:space:]]+)(.*)/\2\3\4/' -i /etc/ssh
 $a sed -re 's/^(PasswordAuthentication)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)prohibit-password/\1\2no/' -i /etc/ssh/sshd_config
-$a sed -re "s/^(PermitRootLogin)([[:space:]]+)22/\1\2$port/" -i /etc/ssh/sshd_config
+$a sed -re "s/^(Port)([[:space:]]+)22/\1\2$port/" -i /etc/ssh/sshd_config
 
 #IPTABLES
 $a apt update
@@ -71,3 +71,4 @@ $a chmod a+r /etc/apt/keyrings/docker.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | $a tee /etc/apt/sources.list.d/docker.list > /dev/null
 $a apt-get update
 $a apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+#FAIL2BAN

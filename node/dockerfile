@@ -1,7 +1,0 @@
-FROM node:20-alpine
-
-RUN mkdir /app && chown 1000:1000 /app
-
-WORKDIR /app
-
-USER 1000

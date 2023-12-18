@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+
+    environment:
+      TZ: 'Asia/Jakarta'
+      WEBPASSWORD: 'z3J#yWE9iyd#dB'
+    volumes:
+      - '/data/pihole/etc-pihole:/etc/pihole'
+      - '/data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks:
+      wg-network:
+        ipv4_address: 10.0.0.4
+
+networks:
+  wg-network:
+    external: true

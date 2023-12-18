@@ -24,7 +24,7 @@ select yn in "Yes" "No"; do
                 $a chown -R $name:$name /home/$name/.ssh
             fi
             break;;
-        No ) exit;;
+        No ) break;;
     esac
 done
 

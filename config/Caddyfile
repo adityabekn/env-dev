@@ -1,0 +1,17 @@
+{
+    email bekti.aditya16@gmail.com
+}
+
+*.adityabekti.net, adityabekti.net {
+	tls {
+		dns cloudflare {ENV_API_CLOUDFLARE}
+	}
+
+	# Standard reverse proxy
+	@pihole host pihole.adityabekti.net
+	handle @pihole {
+    encode zstd gzip
+    redir / /admin{uri}
+		reverse_proxy pihole:80
+	}
+}

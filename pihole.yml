@@ -8,7 +8,7 @@ services:
 
     environment:
       TZ: 'Asia/Jakarta'
-      WEBPASSWORD: 'z3J#yWE9iyd#dB'
+      WEBPASSWORD: {CHANGE_ME}
     volumes:
       - '/data/pihole/etc-pihole:/etc/pihole'
       - '/data/pihole/etc-dnsmasq.d:/etc/dnsmasq.d'
@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
     networks:
       wg-network:
-        ipv4_address: 10.0.0.4
+        ipv4_address: 10.0.0.3
 
 networks:
   wg-network:

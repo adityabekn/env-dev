@@ -6,7 +6,7 @@ services:
       - WG_HOST=103.175.216.201
 
       # Optional:
-      - PASSWORD=Z%xCWik2#YF2^i
+      - PASSWORD={CHANGE_ME}
       # - WG_PORT=51820
       # - WG_DEFAULT_ADDRESS=10.8.0.x
       - WG_DEFAULT_DNS=1.1.1.1

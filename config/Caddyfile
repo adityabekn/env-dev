@@ -7,11 +7,25 @@
 		dns cloudflare {ENV_API_CLOUDFLARE}
 	}
 
-	# Standard reverse proxy
+	@base host adityabekti.net
+	handle @base {
+		respond "Coming Soon"
+	}
+
+	@www host www.adityabekti.net
+	handle @www {
+		redir https://adityabekti.net{uri}
+	}
+
 	@pihole host pihole.adityabekti.net
 	handle @pihole {
-    encode zstd gzip
-    redir / /admin{uri}
+		encode zstd gzip
+		redir / /admin{uri}
 		reverse_proxy pihole:80
+	}
+
+	@wireguard host wg.adityabekti.net
+	handle @wireguard {
+		reverse_proxy wg-easy:51821
 	}
 }

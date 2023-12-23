@@ -1,0 +1,32 @@
+- HomeLab:
+  - Wireguard:
+      icon: /icons/wg.png
+      href: https://wg.adityabekti.net
+      description: VPN & Tunneling
+      server: my-docker
+      container: wg-easy
+      showStats: true
+        
+  - PiHole:
+      icon: pi-hole.png
+      href: https://pihole.adityabekti.net
+      description: DNS & Adblocking
+      container: pihole
+      widget:
+        type: pihole
+        url: http://pihole:80
+        key: ce933055f6e78b6ac01e7eb652605ebb045023714eb0bd777d7f40aac535817c 
+      
+  - Caddy:
+      icon: caddy.png
+      description: Proxy Manager
+      container: caddy
+      widget:
+        type: caddy
+        url: http://caddy:2019
+        
+- Service:
+  - Ekuper:
+      icon: https://ekuper.adityabekti.net/logo.png
+      href: https://ekuper.adityabekti.net
+      description: E-Kuesioner Perkuliahan (E-Kuper) web dan API dengan Laravel

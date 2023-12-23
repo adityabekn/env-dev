@@ -1,5 +1,7 @@
 {
     email bekti.aditya16@gmail.com
+
+	admin 0.0.0.0:2019
 }
 
 *.adityabekti.net, adityabekti.net {
@@ -27,5 +29,20 @@
 	@wireguard host wg.adityabekti.net
 	handle @wireguard {
 		reverse_proxy wg-easy:51821
+	}
+
+	@homepage host home.adityabekti.net
+	handle @homepage {
+		reverse_proxy homepage:3000
+	}
+
+	@ekuper host ekuper.adityabekti.net
+	handle @ekuper {
+		root * /srv/public
+		encode gzip
+		php_fastcgi ekuper-php-1:9000 {
+			root /var/www/html/public
+		}
+		file_server
 	}
 }

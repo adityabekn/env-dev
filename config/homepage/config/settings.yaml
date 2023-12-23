@@ -1,0 +1,22 @@
+title: Dashboard
+
+background: 
+  image: /images/background.jpg
+  opacity: 70
+
+cardBlur: xl
+
+theme: dark
+
+color: slate
+
+useEqualHeights: true
+
+disableCollapse: true
+
+layout:
+  HomeLab:
+    style: row
+    columns: 3
+  Service:
+    style: col

@@ -1,0 +1,17 @@
+- resources:
+    cpu: true
+    memory: true
+    disk: /
+    uptime: true
+
+- search:
+    provider: google
+    target: _blank
+    
+- openmeteo:
+    label: Depok
+    latitude: -6.4
+    longitude: 106.8186
+    timezone: Asia/Bangkok
+    units: metric
+    cache: 5

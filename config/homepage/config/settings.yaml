@@ -1,3 +1,11 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/settings
+
+providers:
+  openweathermap: openweathermapapikey
+  weatherapi: weatherapiapikey
+
 title: Dashboard
 
 background: 
@@ -19,4 +27,6 @@ layout:
     style: row
     columns: 3
   Service:
+    style: col
+  Apps:
     style: col

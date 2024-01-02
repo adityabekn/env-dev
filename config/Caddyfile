@@ -1,21 +1,21 @@
 {
-    email bekti.aditya16@gmail.com
-
+	email bekti.aditya16@gmail.com
 	admin 0.0.0.0:2019
+	auto_https disable_redirects
 }
 
 *.adityabekti.net, adityabekti.net {
 	tls {
-		dns cloudflare {ENV_API_CLOUDFLARE}
+		dns cloudflare Gc7NfM8thjOcLPyl9-5g_SlYIkVRDMNzn2GzGf__
 	}
-
+	
 	@base host adityabekti.net
 	handle @base {
 		respond "Coming Soon"
 	}
-
+	
 	@www host www.adityabekti.net
-	handle @www {
+    	handle @www {
 		redir https://adityabekti.net{uri}
 	}
 
@@ -28,8 +28,8 @@
 
 	@wireguard host wg.adityabekti.net
 	handle @wireguard {
-		reverse_proxy wg-easy:51821
-	}
+    		reverse_proxy wg-easy:51821
+  	}
 
 	@homepage host home.adityabekti.net
 	handle @homepage {
@@ -44,5 +44,14 @@
 			root /var/www/html/public
 		}
 		file_server
+	}
+
+	@filegator host file.adityabekti.net
+	handle @filegator {
+		reverse_proxy filegator:8080
+	}
+
+	handle {
+		abort
 	}
 }

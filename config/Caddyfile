@@ -1,7 +1,6 @@
 {
 	email bekti.aditya16@gmail.com
 	admin 0.0.0.0:2019
-	auto_https disable_redirects
 }
 
 *.adityabekti.net, adityabekti.net {
@@ -16,7 +15,7 @@
 	
 	@www host www.adityabekti.net
     	handle @www {
-		redir https://adityabekti.net{uri}
+		redir https://adityabekti.net{uri} permanent
 	}
 
 	@pihole host pihole.adityabekti.net

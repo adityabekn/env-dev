@@ -1,15 +1,18 @@
 #!/bin/sh
-echo "Are you sudo?"
+echo "Are you root?"
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) 
-            a=sudo
+            a=
             break;;
         No )
-            a=
+            a=sudo
             break;;
     esac
 done
+
+echo ""
+echo ""
 
 echo "Create a non-root user?"
 select yn in "Yes" "No"; do
@@ -19,14 +22,16 @@ select yn in "Yes" "No"; do
             read name
             $a adduser $name
             $a usermod -aG sudo $name
-            if [ -d "~/.ssh" ]; then
-                $a cp -r ~/.ssh /home/$name
-                $a chown -R $name:$name /home/$name/.ssh
+            if [ -d "~/.ssh" ]; then\
+                $a rsync --archive --chown=$name:$name ~/.ssh /home/$name
             fi
             break;;
         No ) break;;
     esac
 done
+
+echo ""
+echo ""
 
 #SSH
 echo "Enter ssh custom port"
@@ -44,6 +49,9 @@ $a sed -re 's/^(PermitRootLogin)([[:space:]]+)yes/\1\2no/' -i /etc/ssh/sshd_conf
 $a sed -re 's/^(PermitRootLogin)([[:space:]]+)prohibit-password/\1\2no/' -i /etc/ssh/sshd_config
 $a sed -re "s/^(Port)([[:space:]]+)22/\1\2$port/" -i /etc/ssh/sshd_config
 
+echo ""
+echo ""
+
 #IPTABLES
 $a apt update
 $a apt install iptables-persistent htop -y
@@ -52,6 +60,9 @@ $a iptables -A INPUT -i lo -j ACCEPT
 $a iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 $a iptables -A INPUT -p tcp --dport $port -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 $a netfilter-persistent save
+
+echo ""
+echo ""
 
 #SWAP
 $a fallocate -l 1G /swapfile
@@ -62,6 +73,9 @@ $a cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | $a tee -a /etc/fstab
 echo 'vm.swappiness=10' | $a tee -a /etc/sysctl.conf
 echo 'vm.vfs_cache_pressure=50' | $a tee -a /etc/sysctl.conf
+
+echo ""
+echo ""
 
 #DOCKER
 $a apt-get install ca-certificates curl gnupg -y

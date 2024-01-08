@@ -8,8 +8,8 @@ services:
     volumes:
       - /data/filegator:/var/www/filegator/repository
     networks:
-      caddy-network:
+      proxy:
 
 networks:
-  caddy-network:
+  proxy:
     external: true

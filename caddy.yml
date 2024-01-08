@@ -11,7 +11,7 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      caddy-network:
+      proxy:
       wg-network:
         ipv4_address: 10.0.0.4
     volumes:
@@ -20,7 +20,7 @@ services:
       - /data/caddy/Caddyfile:/etc/caddy/Caddyfile
 
 networks:
-  caddy-network:
+  proxy:
     name: caddy-network
   wg-network:
     external: true

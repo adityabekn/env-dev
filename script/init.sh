@@ -22,7 +22,7 @@ select yn in "Yes" "No"; do
             read name
             $a adduser $name
             $a usermod -aG sudo $name
-            if [ -d "~/.ssh" ]; then\
+            if [ -d "~/.ssh" ]; then
                 $a rsync --archive --chown=$name:$name ~/.ssh /home/$name
             fi
             break;;
@@ -65,14 +65,18 @@ echo ""
 echo ""
 
 #SWAP
-$a fallocate -l 1G /swapfile
-$a chmod 600 /swapfile
-$a mkswap /swapfile
-$a swapon /swapfile
-$a cp /etc/fstab /etc/fstab.bak
-echo '/swapfile none swap sw 0 0' | $a tee -a /etc/fstab
-echo 'vm.swappiness=10' | $a tee -a /etc/sysctl.conf
-echo 'vm.vfs_cache_pressure=50' | $a tee -a /etc/sysctl.conf
+if free | awk '/^Swap:/ {exit !$2}'; then
+    echo "Have swap"
+else
+    $a fallocate -l 1G /swapfile
+    $a chmod 600 /swapfile
+    $a mkswap /swapfile
+    $a swapon /swapfile
+    $a cp /etc/fstab /etc/fstab.bak
+    echo '/swapfile none swap sw 0 0' | $a tee -a /etc/fstab
+    echo 'vm.swappiness=10' | $a tee -a /etc/sysctl.conf
+    echo 'vm.vfs_cache_pressure=50' | $a tee -a /etc/sysctl.conf
+fi
 
 echo ""
 echo ""

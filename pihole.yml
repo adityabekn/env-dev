@@ -14,7 +14,7 @@ services:
     restart: unless-stopped
     networks:
       wg-network:
-        ipv4_address: 10.0.0.3
+        ipv4_address: 10.0.0.4
 
 networks:
   wg-network:

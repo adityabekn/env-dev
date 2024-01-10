@@ -13,7 +13,7 @@ services:
     networks:
       proxy:
       wg-network:
-        ipv4_address: 10.0.0.4
+        ipv4_address: 10.0.0.3
     volumes:
       - /data/caddy/data/:/data/
       - /data/caddy/config/:/config/
@@ -21,6 +21,6 @@ services:
 
 networks:
   proxy:
-    name: caddy-network
+    name: proxy
   wg-network:
     external: true
